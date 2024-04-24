@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../git_mirror/.idea/git_mirror.iml" filepath="$PROJECT_DIR$/../git_mirror/.idea/git_mirror.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../llm_build/.idea/llm_build.iml" filepath="$PROJECT_DIR$/../llm_build/.idea/llm_build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../metametameta/.idea/metametameta.iml" filepath="$PROJECT_DIR$/../metametameta/.idea/metametameta.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sparkle_log.iml" filepath="$PROJECT_DIR$/.idea/sparkle_log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../untruncate_json/.idea/untruncate_json.iml" filepath="$PROJECT_DIR$/../untruncate_json/.idea/untruncate_json.iml" />
+    </modules>
+  </component>
+</project>
