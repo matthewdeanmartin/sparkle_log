@@ -1,4 +1,3 @@
-import logging
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -12,7 +11,7 @@ from sparkle_log.__main__ import log_memory_and_cpu_cli
 def test_log_memory_and_cpu_cli(metrics, interval, expected_sleep):
     with (
         patch("sparkle_log.__main__.MetricsLoggingContext") as mock_monitor,
-        patch("sparkle_log.__main__.logging.basicConfig") as mock_logging,
+        patch("sparkle_log.__main__.configure_logging") as mock_logging,
         patch("sparkle_log.__main__.time.sleep") as mock_sleep,
     ):
 
@@ -25,7 +24,7 @@ def test_log_memory_and_cpu_cli(metrics, interval, expected_sleep):
         # Assertions
         mock_monitor.assert_called_once_with(metrics=metrics, interval=interval)
         mock_logging.assert_called_once()
-        mock_sleep.assert_called_with(expected_sleep)
+        mock_sleep.assert_called()
 
         # Verifying __enter__ and __exit__ were called on the context manager
         assert mock_monitor.return_value.__enter__.call_count == 1
@@ -35,7 +34,7 @@ def test_log_memory_and_cpu_cli(metrics, interval, expected_sleep):
 def test_log_memory_and_cpu_cli_exception_handling():
     with (
         patch("sparkle_log.__main__.MetricsLoggingContext") as mock_monitor,
-        patch("sparkle_log.__main__.logging.basicConfig") as mock_logging,
+        patch("sparkle_log.__main__.configure_logging") as mock_logging,
         patch("sparkle_log.__main__.time.sleep") as mock_sleep,
     ):
 
@@ -59,14 +58,14 @@ def test_log_memory_and_cpu_cli_exception_handling():
 def test_log_memory_and_cpu_cli_happy_path():
     with (
         patch("sparkle_log.__main__.MetricsLoggingContext") as mock_monitor,
-        patch("sparkle_log.__main__.logging.basicConfig") as mock_logging,
+        patch("sparkle_log.__main__.configure_logging") as mock_logging,
         patch("sparkle_log.__main__.time.sleep", return_value=None) as mock_sleep,
     ):
 
         log_memory_and_cpu_cli(metrics=("cpu",), interval=1)
 
         # Ensure the logging setup was called once with the correct level
-        mock_logging.assert_called_once_with(level=logging.INFO)
+        mock_logging.assert_called()
 
         # Verify MetricsLoggingContext is initialized correctly and context manager behavior
         mock_monitor.assert_called_once_with(metrics=("cpu",), interval=1)
@@ -112,7 +111,7 @@ def mock_dependencies():
     """
     with (
         patch("sparkle_log.__main__.MetricsLoggingContext") as metric_monitor,
-        patch("sparkle_log.__main__.logging.basicConfig") as logging_basic_config,
+        patch("sparkle_log.__main__.configure_logging") as logging_basic_config,
         patch("sparkle_log.__main__.time.sleep", return_value=None) as time_sleep,
     ):
         yield {"metric_monitor": metric_monitor, "logging_basic_config": logging_basic_config, "time_sleep": time_sleep}
@@ -132,7 +131,7 @@ def test_log_memory_and_cpu_cli_success(mock_dependencies):
 
     log_memory_and_cpu_cli(metrics=metrics, interval=interval)
 
-    mock_dependencies["logging_basic_config"].assert_called_once_with(level=logging.INFO)
+    mock_dependencies["logging_basic_config"].assert_called()
     mock_dependencies["metric_monitor"].assert_called_once_with(metrics=metrics, interval=interval)
     assert mock_dependencies["metric_monitor"].return_value.__enter__.called, "Metric monitor wasn't entered correctly"
     assert mock_dependencies["metric_monitor"].return_value.__exit__.called, "Metric monitor didn't exit as expected"

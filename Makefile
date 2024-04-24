@@ -90,15 +90,25 @@ publish_test:
 publish: test
 	rm -rf dist && poetry build
 
-.PHONY:
-docker:
-	docker build -t sparkle_log -f Dockerfile .
+check_docs:
+	$(VENV) interrogate sparkle_log --verbose
+	$(VENV) pydoctest --config .pydoctest.json | grep -v "__init__" | grep -v "__main__" | grep -v "Unable to parse"
 
-.PHONY:
-pex:
-	# linux only
-	@poetry export -f requirements.txt --output requirements.txt
-	@pex -r "requirements.txt" -e "sparkle_log.cli:main" -o "sparkle_log.pex"
+make_docs:
+	pdoc sparkle_log --html -o docs --force
 
-shiv: sparkle_log.pyz
-	@shiv sparkle_log -o sparkle_log.pyz --python python --console-script sparkle_log
+check_md:
+	$(VENV) mdformat README.md docs/*.md
+	# $(VENV) linkcheckMarkdown README.md # it is attempting to validate ssl certs
+	$(VENV) markdownlint README.md --config .markdownlintrc
+
+check_spelling:
+	$(VENV) pylint sparkle_log --enable C0402 --rcfile=.pylintrc_spell
+	$(VENV) codespell README.md --ignore-words=private_dictionary.txt
+	$(VENV) codespell sparkle_log --ignore-words=private_dictionary.txt
+
+check_changelog:
+	# pipx install keepachangelog-manager
+	$(VENV) changelogmanager validate
+
+check_all: check_docs check_md check_spelling check_changelog

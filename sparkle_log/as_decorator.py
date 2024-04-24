@@ -1,17 +1,28 @@
+"""
+This module contains the decorator to monitor the metrics of the system while the function is being executed.
+"""
+
 import logging
 from functools import wraps
 from threading import Event, Thread
 
-from sparkle_log.global_logger import GLOBAL_LOGGER
+from sparkle_log.graphs import GLOBAL_LOGGER
 from sparkle_log.scheduler import run_scheduler
 
 INITIALIZED = False
 
 
 def monitor_metrics_on_call(metrics=("cpu", "memory"), interval=10):
+    """
+    Decorator to monitor the system metrics while the function is being executed.
+    """
+
     def decorator(func):
+        """Wrapper function"""
+
         @wraps(func)
         def wrapper(*args, **kwargs):
+            """Wrapper function"""
             if not GLOBAL_LOGGER.isEnabledFor(logging.INFO):
                 return func(*args, **kwargs)
             stop_event = Event()

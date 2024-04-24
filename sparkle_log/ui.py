@@ -1,3 +1,7 @@
+"""
+Sparkline graph code goes here.
+"""
+
 import sparklines
 
 

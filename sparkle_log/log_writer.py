@@ -1,15 +1,26 @@
+"""
+Log writer module, stateful and does not require a decorator or context manager.
+"""
+
 import logging
 import statistics
+from typing import Optional
 
 import psutil
 
-from sparkle_log.global_logger import GLOBAL_LOGGER
+from sparkle_log.graphs import GLOBAL_LOGGER
 from sparkle_log.ui import sparkline
 
-READINGS: dict[str, list[int]] = {"cpu": [], "memory": []}
+READINGS: dict[str, list[Optional[int]]] = {"cpu": [None] * 29, "memory": [None] * 29}
 
 
 def log_system_metrics(metrics: tuple[str, ...]) -> None:
+    """
+    Log system metrics.
+
+    Args:
+        metrics: A tuple of metrics to log.
+    """
     if not GLOBAL_LOGGER.isEnabledFor(logging.INFO):
         return
     if "cpu" in metrics:
@@ -32,14 +43,16 @@ def log_system_metrics(metrics: tuple[str, ...]) -> None:
     for metric, value in READINGS.items():
         if metric not in metrics:
             continue
-        average = round(statistics.mean(value), 1)
-        minimum = min(value)
-        maximum = max(value)
+        values_for_stats = [_ for _ in value if _ is not None]
+        average = round(statistics.mean(values_for_stats), 1)
+        minimum = min(values_for_stats)
+        maximum = max(values_for_stats)
+        metric_formatted = "  " + str(value[-1])[-2:]
         if metric == "cpu":
             GLOBAL_LOGGER.info(
-                f"CPU: {value[-1]}% | {sparkline(value)} | min, mean, max ({minimum}, {average}, {maximum})"
+                f"CPU   : {metric_formatted}% | {sparkline(value)} | min, mean, max ({minimum}, {average}, {maximum})"
             )
         elif metric == "memory":
             GLOBAL_LOGGER.info(
-                f"Memory: {value[-1]}% | {sparkline(value)} | min, mean, max ({minimum}, {average}, {maximum})"
+                f"Memory: {metric_formatted}% | {sparkline(value)} | min, mean, max ({minimum}, {average}, {maximum})"
             )

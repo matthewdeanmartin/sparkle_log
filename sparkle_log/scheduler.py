@@ -1,3 +1,5 @@
+"""Trigger logging on a schedule."""
+
 import time
 from threading import Event
 

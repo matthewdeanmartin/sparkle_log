@@ -1,3 +1,7 @@
+"""
+Write sparkline graphs of CPU and memory usage to your logs.
+"""
+
 __all__ = ["monitor_metrics_on_call", "log_system_metrics", "MetricsLoggingContext", "__version__"]
 
 from sparkle_log.__about__ import __version__

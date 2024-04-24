@@ -6,7 +6,7 @@ from sparkle_log.as_decorator import monitor_metrics_on_call
 
 
 @pytest.fixture
-def mock_global_logger_enabled():
+def mock_graphs_enabled():
     with patch("sparkle_log.as_decorator.GLOBAL_LOGGER.isEnabledFor") as mock_enabled:
         yield mock_enabled
 
@@ -23,8 +23,8 @@ def mock_run_scheduler():
         yield mock_scheduler
 
 
-def test_monitor_metrics_disabled_logger(mock_global_logger_enabled, mock_thread, mock_run_scheduler):
-    mock_global_logger_enabled.return_value = False
+def test_monitor_metrics_disabled_logger(mock_graphs_enabled, mock_thread, mock_run_scheduler):
+    mock_graphs_enabled.return_value = False
     mock_func = Mock()
 
     decorated_func = monitor_metrics_on_call()(mock_func)
@@ -35,8 +35,8 @@ def test_monitor_metrics_disabled_logger(mock_global_logger_enabled, mock_thread
     assert mock_func.called
 
 
-def test_monitor_metrics_error_condition(mock_global_logger_enabled, mock_thread, mock_run_scheduler):
-    mock_global_logger_enabled.side_effect = TypeError("Error")
+def test_monitor_metrics_error_condition(mock_graphs_enabled, mock_thread, mock_run_scheduler):
+    mock_graphs_enabled.side_effect = TypeError("Error")
     mock_func = Mock()
 
     decorated_func = monitor_metrics_on_call()(mock_func)
@@ -48,11 +48,9 @@ def test_monitor_metrics_error_condition(mock_global_logger_enabled, mock_thread
     assert not mock_func.called
 
 
-def test_monitor_metrics_skips_scheduler_when_logger_disabled(
-    mock_global_logger_enabled, mock_thread, mock_run_scheduler
-):
+def test_monitor_metrics_skips_scheduler_when_logger_disabled(mock_graphs_enabled, mock_thread, mock_run_scheduler):
     """Test that monitor_metrics_on_call skips the scheduler when the global logger is disabled."""
-    mock_global_logger_enabled.return_value = False
+    mock_graphs_enabled.return_value = False
     mock_func = Mock()
 
     decorated_func = monitor_metrics_on_call()(mock_func)
@@ -64,10 +62,10 @@ def test_monitor_metrics_skips_scheduler_when_logger_disabled(
 
 
 def test_monitor_metrics_handles_exception_from_logger_enabled_check(
-    mock_global_logger_enabled, mock_thread, mock_run_scheduler
+    mock_graphs_enabled, mock_thread, mock_run_scheduler
 ):
     """Test that monitor_metrics_on_call handles an exception raised during logger enabled checking."""
-    mock_global_logger_enabled.side_effect = TypeError("Error")
+    mock_graphs_enabled.side_effect = TypeError("Error")
     mock_func = Mock()
 
     decorated_func = monitor_metrics_on_call()(mock_func)

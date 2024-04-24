@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sparkle-log"
-version = "0.1.0"
+version = "0.2.0"
 description = "Write sparkline graphs of CPU and memory usage to your logs."
 authors = ["Matthew Martin <matthewdeanmartin@gmail.com>"]
 keywords = ["monitoring", "logging" ]
@@ -40,12 +40,12 @@ python = ">=3.9"
 psutil = "*"
 schedule = "*"
 sparklines = "*"
+colorlog = ">=6.8.0"
 
 # TODO: 3rd party sparkline graphs
 
 [tool.poetry.dev-dependencies]
 # ui for verbose loggging
-colorlog = ">=6.8.0, <7"
 
 # build tools
 black = ">=23.11.0"

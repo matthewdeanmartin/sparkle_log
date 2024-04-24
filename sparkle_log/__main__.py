@@ -1,5 +1,11 @@
+"""
+CLI interface. At the moment, the CLI is for demonstration purposes only. Use the decorator or context manager in your
+own code.
+"""
+
 import argparse
 import logging
+import logging.config
 import sys
 import time
 from typing import Optional, Sequence
@@ -15,12 +21,48 @@ def log_memory_and_cpu():
         print("Executing demo...")
 
 
-def log_memory_and_cpu_cli(metrics=("cpu", "memory"), interval: int = 1, duration: int = 20):
-    logging.basicConfig(level=logging.INFO)
+def log_memory_and_cpu_cli(metrics=("cpu", "memory"), interval: int = 1, duration: int = 10):
+    """
+    Log memory and CPU metrics using the Sparkle Log system.
+    """
+    configure_logging()
     with MetricsLoggingContext(metrics=metrics, interval=interval):
         # Execute some operations
         print("Demo of Sparkle Monitoring system metrics during operations...")
-        time.sleep(duration)
+        time.sleep(int(duration / 3))
+        print("Maybe CPU intensive work done here...")
+        time.sleep(int(duration / 3))
+        print("Maybe Memory intensive work done here...")
+        time.sleep(int(duration / 3))
+
+
+def configure_logging() -> None:
+    logging.config.dictConfig(
+        {
+            "version": 1,
+            "formatters": {
+                "colored": {
+                    "()": "colorlog.ColoredFormatter",
+                    "format": "%(log_color)s%(levelname)-8s%(reset)s %(blue)s%(message)s",
+                }
+            },
+            "handlers": {
+                "default": {
+                    "level": "DEBUG",
+                    "formatter": "colored",
+                    "class": "logging.StreamHandler",
+                    "stream": "ext://sys.stdout",  # Default is stderr
+                },
+            },
+            "loggers": {
+                "sparkle_log": {
+                    "handlers": ["default"],
+                    "level": "DEBUG",
+                    "propagate": False,
+                }
+            },
+        }
+    )
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:

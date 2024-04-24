@@ -2,7 +2,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from sparkle_log.global_logger import GLOBAL_LOGGER
+from sparkle_log.graphs import GLOBAL_LOGGER
 from sparkle_log.log_writer import READINGS, log_system_metrics
 
 # Importing directly for mocking, even if not directly used in tests to enhance clarity
@@ -24,7 +24,8 @@ def test_log_system_metrics(metrics, expected_calls):
         patch("psutil.virtual_memory", return_value=MagicMock(percent=70)) as _mock_virtual_memory,
         patch("sparkle_log.ui.sparkline", return_value="spark"),
     ):
-
+        for _key, value in READINGS.items():
+            value.clear()
         log_system_metrics(metrics)
 
         assert mock_is_enabled.called
@@ -34,9 +35,9 @@ def test_log_system_metrics(metrics, expected_calls):
         # Validate that the logging messages include specific text based on the metrics
         for metric in metrics:
             if metric == "cpu":
-                mock_info.assert_any_call("CPU: 50% | ▄ | min, mean, max (50, 50, 50)")
+                mock_info.assert_any_call("CPU   :   50% | ▄ | min, mean, max (50, 50, 50)")
             elif metric == "memory":
-                mock_info.assert_any_call("Memory: 70% | ▄ | min, mean, max (70, 70, 70)")
+                mock_info.assert_any_call("Memory:   70% | ▄ | min, mean, max (70, 70, 70)")
 
 
 # Considering there's no explicit exception handling in the provided function,
@@ -88,7 +89,7 @@ def test_log_cpu_metrics_happy_path():
         log_system_metrics(("cpu",))
 
         assert READINGS["cpu"][-1] == 20
-        mock_info.assert_called_once_with("CPU: 20% | [sparkline] | min, mean, max (20, 20, 20)")
+        mock_info.assert_called_once_with("CPU   :   20% | [sparkline] | min, mean, max (20, 20, 20)")
 
 
 def test_log_memory_metrics_happy_path():
@@ -104,7 +105,7 @@ def test_log_memory_metrics_happy_path():
         log_system_metrics(("memory",))
 
         assert READINGS["memory"][-1] == 50
-        mock_info.assert_called_once_with("Memory: 50% | [sparkline] | min, mean, max (50, 50, 50)")
+        mock_info.assert_called_once_with("Memory:   50% | [sparkline] | min, mean, max (50, 50, 50)")
 
 
 def test_no_logging_if_not_enabled():
