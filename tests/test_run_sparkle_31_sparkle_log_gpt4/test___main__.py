@@ -19,7 +19,7 @@ test_data = [
 def test_main(mock_parse_args, mock_log_memory_and_cpu_cli, args, expected_metrics, expected_interval):
     # Setup the mock to return values for args
     mock_parse_args.return_value = argparse.Namespace(
-        metrics=",".join(expected_metrics), interval=expected_interval, duration=0
+        metrics=",".join(expected_metrics), interval=expected_interval, duration=0, style="bar"
     )
 
     # Execute the function
@@ -27,7 +27,7 @@ def test_main(mock_parse_args, mock_log_memory_and_cpu_cli, args, expected_metri
 
     # Assert the mocked function log_memory_and_cpu_cli is called correctly
     mock_log_memory_and_cpu_cli.assert_called_once_with(
-        metrics=expected_metrics, interval=expected_interval, duration=0
+        metrics=expected_metrics, interval=expected_interval, duration=0, style="bar"
     )
 
 

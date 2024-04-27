@@ -33,6 +33,7 @@ test: clean .build_history/pylint .build_history/bandit poetry.lock
 	@echo "Running unit tests"
 	$(VENV) python -m unittest discover
 	$(VENV) py.test tests --cov=sparkle_log --cov-report=html --cov-fail-under 50
+	$(VENV) bash test.sh
 
 .build_history:
 	@mkdir -p .build_history

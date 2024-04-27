@@ -59,3 +59,5 @@ stateful
 sparkline
 sparklines
 CLI
+ASCII
+Ascii

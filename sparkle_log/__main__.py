@@ -8,25 +8,30 @@ import logging
 import logging.config
 import sys
 import time
-from typing import Optional, Sequence
+from typing import Optional, Sequence, cast
 
+from sparkle_log.__about__ import __version__
 from sparkle_log.as_context_manager import MetricsLoggingContext
 from sparkle_log.as_decorator import monitor_metrics_on_call
+from sparkle_log.ui import GraphStyle
 
 
 @monitor_metrics_on_call(("cpu",), 1)
 def log_memory_and_cpu():
+    """Example with decorator"""
     while True:
         time.sleep(4)
         print("Executing demo...")
 
 
-def log_memory_and_cpu_cli(metrics=("cpu", "memory"), interval: int = 1, duration: int = 10):
+def log_memory_and_cpu_cli(
+    metrics=("cpu", "memory", "drive"), interval: int = 1, duration: int = 10, style: GraphStyle = "bar"
+):
     """
     Log memory and CPU metrics using the Sparkle Log system.
     """
     configure_logging()
-    with MetricsLoggingContext(metrics=metrics, interval=interval):
+    with MetricsLoggingContext(metrics=metrics, interval=interval, style=style):
         # Execute some operations
         print("Demo of Sparkle Monitoring system metrics during operations...")
         time.sleep(int(duration / 3))
@@ -37,6 +42,7 @@ def log_memory_and_cpu_cli(metrics=("cpu", "memory"), interval: int = 1, duratio
 
 
 def configure_logging() -> None:
+    """Turn on color logging"""
     logging.config.dictConfig(
         {
             "version": 1,
@@ -66,16 +72,25 @@ def configure_logging() -> None:
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
+    """Arg parse code"""
     parser = argparse.ArgumentParser(description="Monitor system metrics using Sparkle Log.")
     parser.add_argument(
         "--metrics",
         type=str,
-        default="cpu,memory",
-        help="Comma-separated list of metrics to monitor (e.g., 'cpu,memory')",
+        default="cpu,memory,drive",
+        help="Comma-separated list of metrics to monitor (e.g., 'cpu,memory,drive')",
     )
     parser.add_argument("--interval", type=int, default=1, help="Interval in seconds between metric logs")
     parser.add_argument("--duration", type=int, default=10, help="Duration in sections to gather metrics")
-    parser.add_argument("--version", action="version", version="Sparkle Log 1.0")
+    # An add_argument call with a choice of bar, faces
+    parser.add_argument(
+        "--style",
+        choices=["bar", "faces", "jagged", "linear", "vertical", "ascii_art", "pie_chart"],
+        default="bar",
+        help="Graph Style",
+    )
+
+    parser.add_argument("--version", action="version", version=f"Sparkle Log {__version__}")
 
     args = parser.parse_args(argv)
 
@@ -83,7 +98,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     metrics_tuple = tuple(args.metrics.split(","))
 
     # Call the function with parsed arguments
-    log_memory_and_cpu_cli(metrics=metrics_tuple, interval=args.interval, duration=args.duration)
+    log_memory_and_cpu_cli(
+        metrics=metrics_tuple, interval=args.interval, duration=args.duration, style=cast(GraphStyle, str(args.style))
+    )
     return 0
 
 

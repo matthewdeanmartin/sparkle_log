@@ -22,7 +22,7 @@ def test_log_memory_and_cpu_cli(metrics, interval, expected_sleep):
         log_memory_and_cpu_cli(metrics, interval)
 
         # Assertions
-        mock_monitor.assert_called_once_with(metrics=metrics, interval=interval)
+        mock_monitor.assert_called_once_with(metrics=metrics, interval=interval, style="bar")
         mock_logging.assert_called_once()
         mock_sleep.assert_called()
 
@@ -68,7 +68,7 @@ def test_log_memory_and_cpu_cli_happy_path():
         mock_logging.assert_called()
 
         # Verify MetricsLoggingContext is initialized correctly and context manager behavior
-        mock_monitor.assert_called_once_with(metrics=("cpu",), interval=1)
+        mock_monitor.assert_called_once_with(metrics=("cpu",), interval=1, style="bar")
         assert mock_monitor.return_value.__enter__.called
         assert mock_monitor.return_value.__exit__.called
 
@@ -85,7 +85,7 @@ def test_log_memory_and_cpu_cli_empty_metrics_one():
         log_memory_and_cpu_cli(metrics=(), interval=2)
 
         # With no metrics defined, the MetricsLoggingContext should still be initialized but with default metrics
-        mock_monitor.assert_called_once_with(metrics=(), interval=2)
+        mock_monitor.assert_called_once_with(metrics=(), interval=2, style="bar")
 
         # Check if mocked time.sleep was called indicating the code path proceeded despite the edge case
         mock_sleep.assert_called()
@@ -132,7 +132,7 @@ def test_log_memory_and_cpu_cli_success(mock_dependencies):
     log_memory_and_cpu_cli(metrics=metrics, interval=interval)
 
     mock_dependencies["logging_basic_config"].assert_called()
-    mock_dependencies["metric_monitor"].assert_called_once_with(metrics=metrics, interval=interval)
+    mock_dependencies["metric_monitor"].assert_called_once_with(metrics=metrics, interval=interval, style="bar")
     assert mock_dependencies["metric_monitor"].return_value.__enter__.called, "Metric monitor wasn't entered correctly"
     assert mock_dependencies["metric_monitor"].return_value.__exit__.called, "Metric monitor didn't exit as expected"
 
@@ -178,7 +178,7 @@ def test_log_memory_and_cpu_cli_empty_metrics(mock_system):
     log_memory_and_cpu_cli(metrics=empty_metrics, interval=interval)
 
     # Assertions to verify the correct handling of the edge case
-    MockMetricsLoggingContext.assert_called_once_with(metrics=empty_metrics, interval=interval)
+    MockMetricsLoggingContext.assert_called_once_with(metrics=empty_metrics, interval=interval, style="bar")
     assert (
         MockMetricsLoggingContext.return_value.__enter__.called
     ), "MetricsLoggingContext context manager was not entered"

@@ -54,7 +54,25 @@ ignore_fs_types = {
 }
 
 
-def get_drive_info() -> list[dict[str, Any]]:
+def get_free_percent_for_all_drives() -> float:
+    """
+    Get the percent of free space for all physical drives on the system.
+
+    Returns:
+        float: The percent of free space.
+    """
+    free = 0.0
+    total = 0.0
+    for data in get_drive_info(use_numbers=True):
+        # get percent free
+        free += data["Free Space"]
+        total += data["Total Space"]
+    if total > 0.0:
+        return (free / total) * 100
+    return 0.0
+
+
+def get_drive_info(use_numbers: bool = False) -> list[dict[str, Any]]:
     """
     Get a list of all physical mounted drives with their total and free space, excluding virtual or system mounts.
 
@@ -68,12 +86,15 @@ def get_drive_info() -> list[dict[str, Any]]:
                 usage = psutil.disk_usage(partition.mountpoint)
                 drive = {
                     "Mount Point": partition.mountpoint,
-                    "Total Space": convert_bytes_to_gb(usage.total),
-                    "Free Space": convert_bytes_to_gb(usage.free),
+                    "Total Space": convert_bytes_to_gb(usage.total) if not use_numbers else usage.total,
+                    "Free Space": convert_bytes_to_gb(usage.free) if not use_numbers else usage.free,
                 }
                 drives.append(drive)
-            except PermissionError:
-                LOGGER.debug(f"Access denied to {partition.mountpoint}")
-            except Exception as e:
-                LOGGER.debug(f"Could not access {partition.mountpoint}: {e}")
+            except Exception:
+                # Too noisy.
+                pass
     return drives
+
+
+if __name__ == "__main__":
+    print(get_free_percent_for_all_drives())
