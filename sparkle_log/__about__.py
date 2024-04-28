@@ -16,7 +16,7 @@ __all__ = [
 ]
 
 __title__ = "sparkle-log"
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 __description__ = "Write sparkline graphs of CPU and memory usage to your logs."
 __author__ = "Matthew Martin"
 __author_email__ = "matthewdeanmartin@gmail.com"

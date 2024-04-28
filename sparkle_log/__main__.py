@@ -13,7 +13,7 @@ from typing import Optional, Sequence, cast
 from sparkle_log.__about__ import __version__
 from sparkle_log.as_context_manager import MetricsLoggingContext
 from sparkle_log.as_decorator import monitor_metrics_on_call
-from sparkle_log.ui import GraphStyle
+from sparkle_log.custom_types import GraphStyle
 
 
 @monitor_metrics_on_call(("cpu",), 1)
