@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sparkle-log"
-version = "0.3.0"
+version = "0.4.0"
 description = "Write sparkline graphs of CPU and memory usage to your logs."
 authors = ["Matthew Martin <matthewdeanmartin@gmail.com>"]
 keywords = ["monitoring", "logging" ]
