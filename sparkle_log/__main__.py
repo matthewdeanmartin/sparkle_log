@@ -8,7 +8,7 @@ import logging
 import logging.config
 import sys
 import time
-from typing import Optional, Sequence, cast
+from typing import Sequence, cast
 
 from sparkle_log.__about__ import __version__
 from sparkle_log.as_context_manager import MetricsLoggingContext
@@ -71,7 +71,7 @@ def configure_logging() -> None:
     )
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     """Arg parse code"""
     parser = argparse.ArgumentParser(description="Monitor system metrics using Sparkle Log.")
     parser.add_argument(
