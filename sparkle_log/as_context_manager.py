@@ -5,7 +5,7 @@ Context manager of logger so you have more control over when it starts and stops
 import logging
 import time
 from threading import Event, Thread
-from typing import Any, Optional
+from typing import Any
 
 from sparkle_log.custom_types import CustomMetricsCallBacks, GraphStyle
 from sparkle_log.graphs import GLOBAL_LOGGER
@@ -35,8 +35,8 @@ class MetricsLoggingContext:
         self.metrics = metrics
         self.interval = interval
         self.style = style
-        self.stop_event: Optional[Event] = None
-        self.scheduler_thread: Optional[Thread] = None
+        self.stop_event: Event | None = None
+        self.scheduler_thread: Thread | None = None
         self.custom_metrics = custom_metrics
 
     def __enter__(self) -> "MetricsLoggingContext":
