@@ -6,11 +6,11 @@
 
 ## UI
 - support even more sparkline graphs
+  - BRAILLE
 - support configuration of graphs
 
 ## Metrics
 - Other metrics?
-
 
 ## Typing
 - Handing of numbers is ugly.
