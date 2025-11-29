@@ -52,10 +52,10 @@ isort: .build_history/isort
 jiggle_version:
 ifeq ($(CI),true)
 	@echo "Running in CI mode"
-	jiggle_version check
+	$(VENV) jiggle_version check
 else
 	@echo "Running locally"
-	jiggle_version hash-all
+	$(VENV) jiggle_version hash-all
 	# jiggle_version bump --increment auto
 endif
 
