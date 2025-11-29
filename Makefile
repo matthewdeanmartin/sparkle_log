@@ -103,7 +103,7 @@ check: mypy test pylint bandit pre-commit
 
 .PHONY: publish
 publish: test
-	rm -rf dist && hatch build
+	rm -rf dist && $(VENV) hatch build
 
 .PHONY: mypy
 mypy:

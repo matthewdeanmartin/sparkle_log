@@ -23,4 +23,4 @@ jobs:
     - name: Run Makefile
       run: make check
     - name: Run make
-      run: hatch build
+      run: uv run hatch build
