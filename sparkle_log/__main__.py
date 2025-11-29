@@ -1,14 +1,17 @@
+# sparkle_log/__main__.py
 """
 CLI interface. At the moment, the CLI is for demonstration purposes only. Use the decorator or context manager in your
 own code.
 """
+
+from __future__ import annotations
 
 import argparse
 import logging
 import logging.config
 import sys
 import time
-from typing import Optional, Sequence, cast
+from typing import Sequence, cast
 
 from sparkle_log.__about__ import __version__
 from sparkle_log.as_context_manager import MetricsLoggingContext
@@ -71,7 +74,7 @@ def configure_logging() -> None:
     )
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     """Arg parse code"""
     parser = argparse.ArgumentParser(description="Monitor system metrics using Sparkle Log.")
     parser.add_argument(
@@ -81,7 +84,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Comma-separated list of metrics to monitor (e.g., 'cpu,memory,drive')",
     )
     parser.add_argument("--interval", type=int, default=1, help="Interval in seconds between metric logs")
-    parser.add_argument("--duration", type=int, default=10, help="Duration in sections to gather metrics")
+    parser.add_argument("--duration", type=int, default=10, help="Duration in seconds to gather metrics")
     # An add_argument call with a choice of bar, faces
     parser.add_argument(
         "--style",

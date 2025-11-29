@@ -2,19 +2,26 @@
 This module contains the decorator to monitor the metrics of the system while the function is being executed.
 """
 
+from __future__ import annotations
+
 import logging
 from asyncio import iscoroutinefunction
 from functools import wraps
 from threading import Event, Thread
 
-from sparkle_log.custom_types import GraphStyle
+from sparkle_log.custom_types import CustomMetricsCallBacks, GraphStyle
 from sparkle_log.graphs import GLOBAL_LOGGER
 from sparkle_log.scheduler import run_scheduler
 
 INITIALIZED = False
 
 
-def monitor_metrics_on_call(metrics=("cpu", "memory"), interval=10, style: GraphStyle = "bar"):
+def monitor_metrics_on_call(
+    metrics: tuple[str, ...] = ("cpu", "memory"),
+    interval: int = 10,
+    style: GraphStyle = "bar",
+    custom_metrics: CustomMetricsCallBacks = None,
+):
     """
     Decorator to monitor the system metrics while the function is being executed.
     """
@@ -27,8 +34,12 @@ def monitor_metrics_on_call(metrics=("cpu", "memory"), interval=10, style: Graph
             """Wrapper function"""
             if not GLOBAL_LOGGER.isEnabledFor(logging.INFO):
                 return func(*args, **kwargs)
+
             stop_event = Event()
-            scheduler_thread = Thread(target=run_scheduler, args=(stop_event, metrics, interval, style))
+            scheduler_thread = Thread(
+                target=run_scheduler,
+                args=(stop_event, metrics, interval, style, custom_metrics),
+            )
             scheduler_thread.start()
 
             try:
@@ -36,16 +47,19 @@ def monitor_metrics_on_call(metrics=("cpu", "memory"), interval=10, style: Graph
             finally:
                 # Stop the scheduler and wait for thread to finish
                 stop_event.set()
-
                 scheduler_thread.join()
 
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
             """Wrapper function"""
             if not GLOBAL_LOGGER.isEnabledFor(logging.INFO):
-                return func(*args, **kwargs)
+                return await func(*args, **kwargs)
+
             stop_event = Event()
-            scheduler_thread = Thread(target=run_scheduler, args=(stop_event, metrics, interval, style))
+            scheduler_thread = Thread(
+                target=run_scheduler,
+                args=(stop_event, metrics, interval, style, custom_metrics),
+            )
             scheduler_thread.start()
 
             try:
@@ -53,7 +67,6 @@ def monitor_metrics_on_call(metrics=("cpu", "memory"), interval=10, style: Graph
             finally:
                 # Stop the scheduler and wait for thread to finish
                 stop_event.set()
-
                 scheduler_thread.join()
 
         return async_wrapper if iscoroutinefunction(func) else wrapper

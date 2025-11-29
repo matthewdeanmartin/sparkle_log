@@ -1,4 +1,7 @@
+# sparkle_log/scheduler.py
 """Trigger logging on a schedule."""
+
+from __future__ import annotations
 
 import time
 from threading import Event

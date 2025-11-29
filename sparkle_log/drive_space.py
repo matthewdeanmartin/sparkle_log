@@ -1,6 +1,9 @@
+# sparkle_log/drive_space.py
 """
 Rough draft of a script to get the total and free space of all physical drives on a system.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Any
@@ -90,7 +93,7 @@ def get_drive_info(use_numbers: bool = False) -> list[dict[str, Any]]:
                     "Free Space": convert_bytes_to_gb(usage.free) if not use_numbers else usage.free,
                 }
                 drives.append(drive)
-            except Exception:
+            except Exception:  # nosec
                 # Too noisy.
                 pass
     return drives

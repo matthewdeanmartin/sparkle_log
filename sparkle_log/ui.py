@@ -1,6 +1,9 @@
+# sparkle_log/ui.py
 """
 Sparkline graph code goes here.
 """
+
+from __future__ import annotations
 
 from typing import cast
 

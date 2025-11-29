@@ -1,11 +1,13 @@
+# sparkle_log/as_context_manager.py
 """
 Context manager of logger so you have more control over when it starts and stops.
 """
 
+from __future__ import annotations
+
 import logging
-import time
 from threading import Event, Thread
-from typing import Any, Optional
+from typing import Any
 
 from sparkle_log.custom_types import CustomMetricsCallBacks, GraphStyle
 from sparkle_log.graphs import GLOBAL_LOGGER
@@ -35,11 +37,11 @@ class MetricsLoggingContext:
         self.metrics = metrics
         self.interval = interval
         self.style = style
-        self.stop_event: Optional[Event] = None
-        self.scheduler_thread: Optional[Thread] = None
+        self.stop_event: Event | None = None
+        self.scheduler_thread: Thread | None = None
         self.custom_metrics = custom_metrics
 
-    def __enter__(self) -> "MetricsLoggingContext":
+    def __enter__(self) -> MetricsLoggingContext:
         """Start the context manager, if logging enabled."""
         if GLOBAL_LOGGER.isEnabledFor(logging.INFO):
             self.stop_event = Event()
@@ -58,17 +60,17 @@ class MetricsLoggingContext:
             self.scheduler_thread.join()
 
 
-# Usage example with the context manager
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
-    import random
-
-    def dodgy_metric():
-        return random.randint(0, 100)
-
-    with MetricsLoggingContext(metrics=("dodgy",), interval=1, custom_metrics={"dodgy": dodgy_metric}):
-        # Execute some operations
-        print("Monitoring system metrics during operations...")
-        time.sleep(20)
-        # Operations are now being monitored
-        # The thread will be stopped when exiting this block
+# # Usage example with the context manager
+# if __name__ == "__main__":
+#     logging.basicConfig(level=logging.INFO)
+#     import random
+#
+#     def dodgy_metric():
+#         return random.randint(0, 100)
+#
+#     with MetricsLoggingContext(metrics=("dodgy",), interval=1, custom_metrics={"dodgy": dodgy_metric}):
+#         # Execute some operations
+#         print("Monitoring system metrics during operations...")
+#         time.sleep(20)
+#         # Operations are now being monitored
+#         # The thread will be stopped when exiting this block

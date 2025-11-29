@@ -1,3 +1,4 @@
+# sparkle_log/__init__.py
 """
 Write sparkline graphs of CPU and memory usage to your logs.
 """

@@ -2,10 +2,10 @@
 set -euo pipefail
 
 # readonly SCRIPT_NS="bash2gitlab_proc"
-readonly SRC_DIR="./jiggle_version"
+readonly SRC_DIR="./sparkle_log"
 readonly TMP_ROOT="/tmp"
-readonly TMP_DIR="${TMP_ROOT}/jiggle_version"
-readonly OUTPUT_MD_BASENAME="jiggle_version.flat.md"
+readonly TMP_DIR="${TMP_ROOT}/sparkle_log"
+readonly OUTPUT_MD_BASENAME="sparkle_log.flat.md"
 
 # Copy directory safely
 bash2gitlab_proc::copy_to_tmp() {
@@ -19,7 +19,7 @@ bash2gitlab_proc::copy_to_tmp() {
   cp -a "${SRC_DIR}" "${TMP_DIR}"
 }
 
-# Run strip-docs for each subdirectory of tmp/jiggle_version
+# Run strip-docs for each subdirectory of tmp/sparkle_log
 bash2gitlab_proc::run_strip_docs() {
   local dir
   echo "Running strip-docs on '${TMP_DIR}' and subdirectories..."
@@ -67,7 +67,7 @@ bash2gitlab_proc::flatten_repo() {
 }
 
 # Clean trailing '##' that appear at the END of lines inside ```python code fences
-# in the generated Markdown (jiggle_version.flat.md). Other code fences remain untouched.
+# in the generated Markdown (sparkle_log.flat.md). Other code fences remain untouched.
 bash2gitlab_proc::clean_flat_md_trailing_double_hash() {
   local output_md
   # Prefer TMP_DIR if the file is written there; fallback to CWD; else try to find it
