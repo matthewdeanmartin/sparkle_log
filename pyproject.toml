@@ -40,6 +40,7 @@ sparkle_log = 'sparkle_log.__main__:main'
 
 [dependency-groups]
 dev = [
+    "jiggle_version",
 
 
     "types-psutil",
