@@ -5,8 +5,8 @@ This module contains the decorator to monitor the metrics of the system while th
 from __future__ import annotations
 
 import logging
-from asyncio import iscoroutinefunction
 from functools import wraps
+from inspect import iscoroutinefunction
 from threading import Event, Thread
 
 from sparkle_log.custom_types import CustomMetricsCallBacks, GraphStyle

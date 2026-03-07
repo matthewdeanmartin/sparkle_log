@@ -29,6 +29,54 @@ def sparkline(numbers: list[NumberType], style: GraphStyle = "bar") -> str:
         return pie_chart_sparkline(numbers)
     elif style == "faces":
         return faces_sparkline(numbers)
+    elif style == "braille":
+        return braille_sparkline(numbers)
+    elif style == "arrows":
+        return arrows_sparkline(numbers)
+    elif style == "weather":
+        return weather_sparkline(numbers)
+    elif style == "hearts":
+        return hearts_sparkline(numbers)
+    elif style == "stars":
+        return stars_sparkline(numbers)
+    elif style == "circles":
+        return circles_sparkline(numbers)
+    elif style == "triangles":
+        return triangles_sparkline(numbers)
+    elif style == "blocks":
+        return blocks_sparkline(numbers)
+    elif style == "dna":
+        return dna_sparkline(numbers)
+    elif style == "morse":
+        return morse_sparkline(numbers)
+    elif style == "digits":
+        return digits_sparkline(numbers)
+    elif style == "binary":
+        return binary_sparkline(numbers)
+    elif style == "hex":
+        return hex_sparkline(numbers)
+    elif style == "chess":
+        return chess_sparkline(numbers)
+    elif style == "cards":
+        return cards_sparkline(numbers)
+    elif style == "bullets":
+        return bullets_sparkline(numbers)
+    elif style == "math":
+        return math_sparkline(numbers)
+    elif style == "zodiac":
+        return zodiac_sparkline(numbers)
+    elif style == "traffic":
+        return traffic_sparkline(numbers)
+    elif style == "battery":
+        return battery_sparkline(numbers)
+    elif style == "temperature":
+        return temperature_sparkline(numbers)
+    elif style == "music":
+        return music_sparkline(numbers)
+    elif style == "checkmarks":
+        return checkmarks_sparkline(numbers)
+    elif style == "trees":
+        return trees_sparkline(numbers)
     return ""
 
 
@@ -84,10 +132,160 @@ def vertical_ascii_sparkline(data: list[NumberType]):
     return sparkline_it(data, symbols)
 
 
+def braille_sparkline(data: list[NumberType]):
+    """Generate a sparkline with Unicode Braille patterns."""
+    symbols = ["⠁", "⠂", "⠃", "⠄", "⠅", "⠆", "⠇", "⠈", "⠉", "⠊"]
+    return sparkline_it(data, symbols)
+
+
+def arrows_sparkline(data: list[NumberType]):
+    """Generate a sparkline with directional arrows."""
+    symbols = ["←", "↔", "→"]
+    return sparkline_it(data, symbols)
+
+
+def weather_sparkline(data: list[NumberType]):
+    """Generate a sparkline with weather condition symbols."""
+    symbols = ["☁️", "🌤️", "⛅", "🌧️", "⛈️"]
+    return sparkline_it(data, symbols)
+
+
+def hearts_sparkline(data: list[NumberType]):
+    """Generate a sparkline with heart symbols."""
+    symbols = ["💔", "❤️", "💕", "💖", "💗"]
+    return sparkline_it(data, symbols)
+
+
+def stars_sparkline(data: list[NumberType]):
+    """Generate a sparkline with star symbols."""
+    symbols = ["☆", "★"]
+    return sparkline_it(data, symbols)
+
+
+def circles_sparkline(data: list[NumberType]):
+    """Generate a sparkline with geometric circle symbols."""
+    symbols = ["◌", "◍", "◎", "◉", "◐"]
+    return sparkline_it(data, symbols)
+
+
+def triangles_sparkline(data: list[NumberType]):
+    """Generate a sparkline with triangular shapes."""
+    symbols = ["▽", "△", "▲"]
+    return sparkline_it(data, symbols)
+
+
+def blocks_sparkline(data: list[NumberType]):
+    """Generate a sparkline with block elements."""
+    symbols = ["▢", "▣", "▤", "▥", "▦", "▧", "▨", "▩", "■"]
+    return sparkline_it(data, symbols)
+
+
+def dna_sparkline(data: list[NumberType]):
+    """Generate a sparkline with helix-style characters."""
+    symbols = ["╱", "╲", "╳"]
+    return sparkline_it(data, symbols)
+
+
+def morse_sparkline(data: list[NumberType]):
+    """Generate a sparkline with dots and dashes."""
+    symbols = ["·", "–"]
+    return sparkline_it(data, symbols)
+
+
+def digits_sparkline(data: list[NumberType]):
+    """Generate a sparkline with digit characters."""
+    symbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    return sparkline_it(data, symbols)
+
+
+def binary_sparkline(data: list[NumberType]):
+    """Generate a sparkline with binary representation."""
+    symbols = ["0", "1"]
+    return sparkline_it(data, symbols)
+
+
+def hex_sparkline(data: list[NumberType]):
+    """Generate a sparkline with hexadecimal characters."""
+    symbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+    return sparkline_it(data, symbols)
+
+
+def chess_sparkline(data: list[NumberType]):
+    """Generate a sparkline with chess piece symbols."""
+    symbols = ["♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"]
+    return sparkline_it(data, symbols)
+
+
+def cards_sparkline(data: list[NumberType]):
+    """Generate a sparkline with playing card suit symbols."""
+    symbols = ["♠", "♥", "♦", "♣"]
+    return sparkline_it(data, symbols)
+
+
+def bullets_sparkline(data: list[NumberType]):
+    """Generate a sparkline with bullet point symbols."""
+    symbols = ["▫", "▪"]
+    return sparkline_it(data, symbols)
+
+
+def math_sparkline(data: list[NumberType]):
+    """Generate a sparkline with mathematical symbols."""
+    symbols = ["∾", "∿", "∇", "△", "□", "○", "◷"]
+    return sparkline_it(data, symbols)
+
+
+def zodiac_sparkline(data: list[NumberType]):
+    """Generate a sparkline with astrological symbols."""
+    symbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"]
+    return sparkline_it(data, symbols)
+
+
+def traffic_sparkline(data: list[NumberType]):
+    """Generate a sparkline with traffic light colors."""
+    symbols = ["🔴", "🟡", "🟢"]
+    return sparkline_it(data, symbols)
+
+
+def battery_sparkline(data: list[NumberType]):
+    """Generate a sparkline with battery level symbols."""
+    symbols = ["🪫", "🔋"]
+    return sparkline_it(data, symbols)
+
+
+def temperature_sparkline(data: list[NumberType]):
+    """Generate a sparkline with thermometer-style symbols."""
+    symbols = ["💧", "🧊", "🌡️"]
+    return sparkline_it(data, symbols)
+
+
+def music_sparkline(data: list[NumberType]):
+    """Generate a sparkline with musical note symbols."""
+    symbols = ["♩", "♪", "♫", "♬"]
+    return sparkline_it(data, symbols)
+
+
+def checkmarks_sparkline(data: list[NumberType]):
+    """Generate a sparkline with success/failure symbols."""
+    symbols = ["✗", "✓"]
+    return sparkline_it(data, symbols)
+
+
+def trees_sparkline(data: list[NumberType]):
+    """Generate a sparkline with forest/environment symbols."""
+    symbols = ["🌱", "🌲", "🌳", "🌴"]
+    return sparkline_it(data, symbols)
+
+
 if __name__ == "__main__":
 
     def run():
-        for style in ["bar", "jagged", "vertical", "linear", "ascii_art", "pie_chart", "faces"]:
+        for style in [
+            "bar", "jagged", "vertical", "linear", "ascii_art", "pie_chart", "faces",
+            "braille", "arrows", "weather", "hearts", "stars", "circles", "triangles",
+            "blocks", "dna", "morse", "digits", "binary", "hex", "chess", "cards",
+            "bullets", "math", "zodiac", "traffic", "battery", "temperature", "music",
+            "checkmarks", "trees",
+        ]:
             print(f"{style}: {sparkline([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], cast(GraphStyle, style))}")
 
     run()

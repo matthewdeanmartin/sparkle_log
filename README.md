@@ -31,7 +31,7 @@ INFO     Memory:   % |                        ▄▄▄▄▄▄▄ | min, mean,
 
 ## Usage
 
-This will write up to log entries to your AWS Lambda log, at a frequency you specify, e.g. every 60 seconds.
+This will write up to 30 log entries to your AWS Lambda log, at a frequency you specify, e.g. every 60 seconds.
 Light-weight, cheap, immediately correlates to your other print statements and log entries.
 
 If logging is less than INFO, then no data is collected.
@@ -45,7 +45,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 
-@sparkle_log.monitor_metrics_on_call(("cpu", "memory" "drive"), 60)
+@sparkle_log.monitor_metrics_on_call(("cpu", "memory", "drive"), 60)
 def handler_name(event, context) -> str:
     return "Hello world!"
 ```
@@ -135,6 +135,22 @@ you only have logging or no easy way to correlate log entries to graphs.
 - [termgraph](https://pypi.org/project/termgraph/) - Various terminal graphs not including sparklines, but including bar
   graphs.
 - [lehar](https://pypi.org/project/lehar/) - Another sparkline function
+
+## CLI
+
+You can also run `sparkle_log` from the command line for demonstration:
+
+```bash
+sparkle_log --metrics cpu,memory,drive --interval 1 --duration 30 --style bar
+```
+
+### Options
+
+- `--metrics`: Comma-separated list of metrics (cpu, memory, drive). Default: cpu,memory,drive
+- `--interval`: Interval in seconds between metric logs. Default: 1
+- `--duration`: Duration in seconds to gather metrics. Default: 10
+- `--style`: Graph style (bar, faces, jagged, linear, vertical, ascii_art, pie_chart). Default: bar
+- `--version`: Show version number
 
 ### CLI tools that display sparklines from arbitrary numbers
 

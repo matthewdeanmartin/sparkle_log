@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run:*)",
+      "Bash(make check:*)",
+      "Bash(git stash:*)",
+      "Bash(git:*)",
+      "Bash(make mypy:*)"
+    ]
+  }
+}

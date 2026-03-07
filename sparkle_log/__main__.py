@@ -88,7 +88,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     # An add_argument call with a choice of bar, faces
     parser.add_argument(
         "--style",
-        choices=["bar", "faces", "jagged", "linear", "vertical", "ascii_art", "pie_chart"],
+        choices=[
+            "bar", "faces", "jagged", "linear", "vertical", "ascii_art", "pie_chart",
+            "braille", "arrows", "weather", "hearts", "stars", "circles", "triangles",
+            "blocks", "dna", "morse", "digits", "binary", "hex", "chess", "cards",
+            "bullets", "math", "zodiac", "traffic", "battery", "temperature", "music",
+            "checkmarks", "trees",
+        ],
         default="bar",
         help="Graph Style",
     )
