@@ -26,7 +26,7 @@ class TestBug1AllNoneData:
             sparkline_it([None, None, None], symbols)
 
     def test_sparkline_all_none_faces_style_crashes(self):
-        """sparkline with faces style crashes on all-None data."""
+        """Sparkline with faces style crashes on all-None data."""
         with pytest.raises(ValueError, match="max.*iterable argument is empty"):
             sparkline([None, None, None], "faces")
 
@@ -72,7 +72,8 @@ class TestBug3BarStyleFallthrough:
         doesn't return anything — execution falls through to `return ""`.
         This means bar style silently returns empty string instead of
         raising an error or returning a meaningful fallback. The `for/return`
-        pattern is misleading and fragile."""
+        pattern is misleading and fragile.
+        """
         with patch("sparkle_log.ui.sparklines.sparklines", return_value=iter([])):
             result = sparkline([1, 2, 3], "bar")
             # Bug: the for-loop doesn't execute, so bar branch produces ""
@@ -82,7 +83,8 @@ class TestBug3BarStyleFallthrough:
 
     def test_sparkline_bar_none_in_data_may_crash(self):
         """Passing None values to sparklines lib (bar style) may cause issues
-        depending on the sparklines library version."""
+        depending on the sparklines library version.
+        """
         # This exercises the bar path with None values — the sparklines lib
         # receives raw None values with no filtering, unlike sparkline_it.
         try:
