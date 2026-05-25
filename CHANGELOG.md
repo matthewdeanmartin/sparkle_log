@@ -9,42 +9,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- 24 new graph styles: braille, arrows, weather, hearts, stars, circles, triangles, blocks, dna, morse, digits, binary, hex, chess, cards, bullets, math, zodiac, traffic, battery, temperature, music, checkmarks, trees
+- Add 24 new graph styles: braille, arrows, weather, hearts, stars, circles, triangles, blocks, dna, morse, digits, binary, hex, chess, cards, bullets, math, zodiac, traffic, battery, temperature, music, checkmarks, trees
 
-## [0.4.0] - 2024-04-27
+## [0.4.0] - 2024-04-28
 
 ### Added
 
-- Decorator support for async functions
+- Add decorator support for async functions
 - Start support for arbitrary custom metrics
 
 ### Fixed
-- Bug on new graph types when denominator would be 0. 
+
+- Fix division-by-zero bug on new graph types when denominator would be 0
 
 ## [0.3.0] - 2024-04-27
 
 ### Added
 
-- Supports graph styles: bar, faces, jagged, linear, vertical, ascii_art, pie_chart
-- Supports new metric, "drive" for free drive space
+- Add graph styles: bar, faces, jagged, linear, vertical, ascii_art, pie_chart
+- Add "drive" metric for free drive space
 
 ### Fixed
-- Merged fix to upstream library to fix 3.12 warnings.
+
+- Merge fix to upstream library to resolve Python 3.12 deprecation warnings
 
 ## [0.2.0] - 2024-04-24
 
 ### Added
 
-- Colorlog in demo.
-- Tidy up vertical alignment
+- Add colorlog in demo
+- Improve vertical alignment
 - Expand readme
 
-## [0.1.0] - 2024-04-23
+## [0.1.0] - 2024-04-24
 
 ### Added
 
-- Initial version. Most things work.
-- Context manager
+- Initial version with most functionality working
+- Context manager support
 - Direct code access
-- Decorator.
+- Decorator support
 
+[1.0.0]: https://github.com/matthewdeanmartin/sparkle_log/compare/v0.4.0...v1.0.0
+[0.4.0]: https://github.com/matthewdeanmartin/sparkle_log/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/matthewdeanmartin/sparkle_log/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/matthewdeanmartin/sparkle_log/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/matthewdeanmartin/sparkle_log/compare/v0.1.0...v0.1.0
