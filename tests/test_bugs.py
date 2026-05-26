@@ -132,9 +132,7 @@ class TestBug4GlobalScheduler:
 
         # Bug: job is NEVER removed from the global scheduler
         jobs_after_stop = len(schedule_mod.jobs)
-        assert jobs_after_stop > initial_jobs, (
-            "Demonstrating the bug: job remains in global scheduler after stop"
-        )
+        assert jobs_after_stop > initial_jobs, "Demonstrating the bug: job remains in global scheduler after stop"
 
         # Clean up for other tests
         schedule_mod.clear()
@@ -161,9 +159,7 @@ class TestBug4GlobalScheduler:
         time.sleep(0.1)
 
         # Bug: both jobs are in the same global scheduler
-        assert len(schedule_mod.jobs) == 2, (
-            "Demonstrating the bug: both schedulers share the global job list"
-        )
+        assert len(schedule_mod.jobs) == 2, "Demonstrating the bug: both schedulers share the global job list"
 
         stop1.set()
         stop2.set()
@@ -171,9 +167,7 @@ class TestBug4GlobalScheduler:
         t2.join(timeout=5)
 
         # Bug: both jobs still linger
-        assert len(schedule_mod.jobs) == 2, (
-            "Demonstrating the bug: jobs are never cleaned up"
-        )
+        assert len(schedule_mod.jobs) == 2, "Demonstrating the bug: jobs are never cleaned up"
 
         schedule_mod.clear()
 
