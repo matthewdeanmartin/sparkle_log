@@ -157,3 +157,10 @@ sparkle_log --metrics cpu,memory,drive --interval 1 --duration 30 --style bar
 - [sparkl](https://pypi.org/project/sparkl/)
 - [sparkback](https://github.com/mmichie/sparkback)
 - [spark](http://github.com/holman/spark) Pure bash implementation that seems to have inspired many clones.
+
+## Project Links
+
+- [GitHub](https://github.com/matthewdeanmartin/sparkle_log)
+- [PyPI](https://pypi.org/project/sparkle-log/)
+- [Bug Tracker](https://github.com/matthewdeanmartin/sparkle_log/issues)
+- [Change Log](https://github.com/matthewdeanmartin/sparkle_log/blob/main/CHANGELOG.md)
