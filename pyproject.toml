@@ -18,7 +18,9 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
 ]
 dependencies = [
     "psutil",
@@ -94,7 +96,8 @@ dev = [
     "linkcheckmd>=1.4.0; python_version >= '3.8'",
     "codespell>=2.2.6; python_version >= '3.8'",
     "pyenchant>=3.2.2; python_version >= '3.8'",
-    "keepachangelog-manager-fork[all]>=6.6.0",
+    "keepachangelog-manager-fork[all]>=6.6.0; python_version < '3.15'",  # [all] extra pulls google-re2, no cp315 wheel / fails to build on Windows
+    "keepachangelog-manager-fork>=6.6.0; python_version >= '3.15'",  # base package only; drop [all] extra to avoid google-re2 on 3.15+
 
 ]
 
@@ -111,11 +114,11 @@ packages = ["sparkle_log"]
 include = [
     "sparkle_log/**/*.py",
     "sparkle_log/py.typed",
-    "/README.md", "LICENSE",
+    "/README.md", "/LICENSE",
 ]
 
 [tool.hatch.build.targets.sdist]
-include = ["/README.md", "LICENSE", "/sparkle_log", "/tests"]
+include = ["/README.md", "/LICENSE", "/sparkle_log", "/tests"]
 
 
 
