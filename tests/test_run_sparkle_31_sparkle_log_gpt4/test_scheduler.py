@@ -20,7 +20,6 @@ def test_run_scheduler_with_multiple_inputs(metrics, seconds):
         patch("sparkle_log.scheduler.time.sleep", side_effect=InterruptedError) as mock_sleep,
         patch("sparkle_log.scheduler.log_system_metrics") as mock_log_system_metrics,
     ):
-
         # Create a stop event and set it to stop the infinite loop
         stop_event = Event()
 
@@ -58,7 +57,6 @@ def test_run_scheduler_with_zero_seconds():
         patch("sparkle_log.scheduler.log_system_metrics") as _mock_log_system_metrics,
         patch("sparkle_log.scheduler.time.sleep", side_effect=(lambda x: stop_event.set())) as mock_sleep,
     ):
-
         stop_event = Event()
 
         # Execute the scheduler with zero seconds
@@ -74,7 +72,6 @@ def test_run_scheduler_with_empty_metrics():
         patch("sparkle_log.scheduler.log_system_metrics") as _mock_log_system_metrics,
         patch("sparkle_log.scheduler.time.sleep", side_effect=(lambda x: stop_event.set())) as _mock_sleep,
     ):
-
         stop_event = Event()
         # Execute the scheduler with an empty metrics tuple
         run_scheduler(stop_event, (), 1)

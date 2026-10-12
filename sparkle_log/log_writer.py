@@ -97,25 +97,19 @@ def _log_metric_series(metric: str, series: list[NumberType], style: GraphStyle)
     # Keep the original human-readable format and sparkline.
     if metric == "cpu":
         GLOBAL_LOGGER.info(
-            f"CPU   : {current}% "
-            f"| min, mean, max ({minimum}, {average}, {maximum}) "
-            f"| {sparkline(series, style)}"
+            f"CPU   : {current}% | min, mean, max ({minimum}, {average}, {maximum}) | {sparkline(series, style)}"
         )
     elif metric == "memory":
         GLOBAL_LOGGER.info(
-            f"Memory: {current}% "
-            f"| min, mean, max ({minimum}, {average}, {maximum}) "
-            f"| {sparkline(series, style)}"
+            f"Memory: {current}% | min, mean, max ({minimum}, {average}, {maximum}) | {sparkline(series, style)}"
         )
     elif metric == "drive":
         GLOBAL_LOGGER.info(
-            f"Drive: {current}% " f"| min, mean, max ({minimum}, {average}, {maximum}) " f"| {sparkline(series, style)}"
+            f"Drive: {current}% | min, mean, max ({minimum}, {average}, {maximum}) | {sparkline(series, style)}"
         )
     else:
         GLOBAL_LOGGER.info(
-            f"{metric}: {current}% "
-            f"| min, mean, max ({minimum}, {average}, {maximum}) "
-            f"| {sparkline(series, style)}"
+            f"{metric}: {current}% | min, mean, max ({minimum}, {average}, {maximum}) | {sparkline(series, style)}"
         )
 
 

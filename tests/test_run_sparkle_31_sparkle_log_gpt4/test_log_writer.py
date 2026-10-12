@@ -85,7 +85,6 @@ def test_log_cpu_metrics_happy_path():
         patch("psutil.cpu_percent", return_value=20),
         patch("sparkle_log.log_writer.GLOBAL_LOGGER.info") as mock_info,
     ):
-
         log_system_metrics(("cpu",))
 
         assert READINGS["cpu"][-1] == 20
@@ -101,7 +100,6 @@ def test_log_memory_metrics_happy_path():
         patch("sparkle_log.log_writer.psutil.virtual_memory", return_value=MagicMock(percent=50)),
         patch("sparkle_log.log_writer.GLOBAL_LOGGER.info") as mock_info,
     ):
-
         log_system_metrics(("memory",))
 
         assert READINGS["memory"][-1] == 50
@@ -113,7 +111,6 @@ def test_no_logging_if_not_enabled():
         patch("sparkle_log.log_writer.GLOBAL_LOGGER.isEnabledFor", return_value=False),
         patch("sparkle_log.log_writer.GLOBAL_LOGGER.info") as mock_info,
     ):
-
         log_system_metrics(("cpu", "memory"))
 
         mock_info.assert_not_called()
@@ -125,7 +122,6 @@ def test_cpu_metrics_first_call_zero_value():
         patch("psutil.cpu_percent", return_value=0),
         patch("sparkle_log.log_writer.GLOBAL_LOGGER.info") as mock_info,
     ):
-
         log_system_metrics(("cpu",))
 
         # No logging should occur for the first zero value with interval=None

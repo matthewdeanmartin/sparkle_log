@@ -7,7 +7,7 @@ authors = [
 ]
 license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 keywords = ["monitoring", "logging" ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -15,7 +15,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -54,7 +53,7 @@ dev = [
     "jiggle-version>=2.0.1",
     "pydantic>=2.12.0; python_version >= '3.14'",
     "troml-dev-status>=0.4.1",
-    "git2md; python_version >= '3.10'",
+    "git2md",
     "pyclean; python_version >= '3.12'",
     "strip-docs>=1.0; python_version >= '3.12'",
     "gha-update; python_version >= '3.12'",
@@ -62,40 +61,40 @@ dev = [
     "mkdocs; python_version >= '3.12'",
     "mdformat",
     # plugin finder
-    "packaging; python_version >= '3.8'",
+    "packaging",
     # mpy
-    "mypy; python_version >= '3.8'",
-    "types-toml; python_version >= '3.8'",
-    "types-jsonschema; python_version >= '3.8'",
+    "mypy",
+    "types-toml",
+    "types-jsonschema",
     # reports
 
     # build
-    "vermin; python_version >= '3.8'",
-    "metametameta>=0.1.14; python_version >= '3.9'",
-    "hatchling; python_version >= '3.8'",
-    "ruff>=0.12.0; python_version >= '3.8'",
-    "pylint; python_version >= '3.8'",
-    "bandit; python_version >= '3.8'",
-    "pre-commit; python_version >= '3.8'",
+    "vermin",
+    "metametameta>=0.1.14",
+    "hatchling",
+    "ruff>=0.12.0",
+    "pylint",
+    "bandit",
+    "pre-commit",
     # testing tools
-    "pytest; python_version >= '3.8'",
-    "pytest-cov; python_version >= '3.8'",
-    "pytest-xdist>=3.5.0; python_version >= '3.8'",
-    "pytest-randomly>=3.15.0; python_version >= '3.8'",
-    "pytest-sugar>=0.9.7; python_version >= '3.8'",
-    "pytest-mock; python_version >= '3.8'",
-    "pytest-unused-fixtures; python_version >= '3.10'",
-    "hypothesis[cli]; python_version >= '3.8'",
+    "pytest",
+    "pytest-cov",
+    "pytest-xdist>=3.5.0",
+    "pytest-randomly>=3.15.0",
+    "pytest-sugar>=0.9.7",
+    "pytest-mock",
+    "pytest-unused-fixtures",
+    "hypothesis[cli]",
     "detect-test-pollution",
     "pytest-timeout>=2.4.0",
     # docs
-    "interrogate>=1.5.0; python_version >= '3.8'",
-    "pydoctest==0.2.1; python_version >= '3.8'",
-    "pdoc3>=0.5.0; python_version >= '3.8'",
-    "mdformat>=0.5.0; python_version >= '3.8'",
-    "linkcheckmd>=1.4.0; python_version >= '3.8'",
-    "codespell>=2.2.6; python_version >= '3.8'",
-    "pyenchant>=3.2.2; python_version >= '3.8'",
+    "interrogate>=1.5.0",
+    "pydoctest==0.2.1",
+    "pdoc3>=0.5.0",
+    "mdformat>=0.5.0",
+    "linkcheckmd>=1.4.0",
+    "codespell>=2.2.6",
+    "pyenchant>=3.2.2",
     "keepachangelog-manager-fork[fast]>=6.8.0; python_version < '3.15'",  # [fast] adds orjson+re2; google-re2 has no cp315 wheel on Windows
     "keepachangelog-manager-fork[stdlib]>=6.8.0; python_version >= '3.15'",  # [stdlib] is pure-Python: same features, no native wheels needed
 
@@ -124,7 +123,7 @@ include = ["/README.md", "/LICENSE", "/sparkle_log", "/tests"]
 
 [tool.black]
 line-length = 120
-target-version = ['py39']
+target-version = ['py311']
 include = '\.pyi?$'
 exclude = '''
 
@@ -186,7 +185,7 @@ select = ["E", "F",
     "UP", # pyupgrade
     "B", # bugbear
 ]
-ignore = [
+ignore = ["RUF100", 
     "D301", # messes with doctests
     "E722",
     # only track structural problems with docstrings, not whitespace, nor missing

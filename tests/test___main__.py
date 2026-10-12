@@ -14,7 +14,6 @@ def test_log_memory_and_cpu_cli(metrics, interval, expected_sleep):
         patch("sparkle_log.__main__.configure_logging") as mock_logging,
         patch("sparkle_log.__main__.time.sleep") as mock_sleep,
     ):
-
         # Instantiating a Magic Mock for the MetricsLoggingContext's context manager behavior
         mock_monitor.return_value.__enter__.return_value = MagicMock()
         mock_monitor.return_value.__exit__.return_value = MagicMock()
@@ -37,7 +36,6 @@ def test_log_memory_and_cpu_cli_exception_handling():
         patch("sparkle_log.__main__.configure_logging") as mock_logging,
         patch("sparkle_log.__main__.time.sleep") as mock_sleep,
     ):
-
         # Configuring the mock to raise an exception when entering the context manager
         mock_monitor.return_value.__enter__.side_effect = TypeError("Error initializing metrics")
 
@@ -61,7 +59,6 @@ def test_log_memory_and_cpu_cli_happy_path():
         patch("sparkle_log.__main__.configure_logging") as mock_logging,
         patch("sparkle_log.__main__.time.sleep", return_value=None) as mock_sleep,
     ):
-
         log_memory_and_cpu_cli(metrics=("cpu",), interval=1)
 
         # Ensure the logging setup was called once with the correct level
@@ -81,7 +78,6 @@ def test_log_memory_and_cpu_cli_empty_metrics_one():
         patch("sparkle_log.__main__.MetricsLoggingContext") as mock_monitor,
         patch("sparkle_log.__main__.time.sleep", return_value=None) as mock_sleep,
     ):
-
         log_memory_and_cpu_cli(metrics=(), interval=2)
 
         # With no metrics defined, the MetricsLoggingContext should still be initialized but with default metrics
@@ -93,7 +89,6 @@ def test_log_memory_and_cpu_cli_empty_metrics_one():
 
 def test_log_memory_and_cpu_cli_with_exception():
     with patch("sparkle_log.__main__.MetricsLoggingContext") as mock_monitor:
-
         mock_monitor.return_value.__enter__.side_effect = RuntimeError("Metric collection failed")
 
         # Testing error handling by expecting a RuntimeError when the MetricsLoggingContext is used

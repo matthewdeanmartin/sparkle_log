@@ -27,7 +27,6 @@ def test_monitor_metrics(log_level, expected_start_thread, tmp_path):
         patch("threading.Thread.start") as mock_thread_start,
         patch("threading.Thread.join") as _mock_thread_join,
     ):
-
         # Mock the isEnabledFor to return True or False based on input log_level
         mock_isEnabledFor.return_value = log_level == logging.INFO
 
