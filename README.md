@@ -164,3 +164,10 @@ sparkle_log --metrics cpu,memory,drive --interval 1 --duration 30 --style bar
 - [PyPI](https://pypi.org/project/sparkle-log/)
 - [Bug Tracker](https://github.com/matthewdeanmartin/sparkle_log/issues)
 - [Change Log](https://github.com/matthewdeanmartin/sparkle_log/blob/main/CHANGELOG.md)
+
+
+## Python 3.15 verification — 2026-10-04
+
+64 tests pass on 3.15.0rc3 with stable/prerelease dependencies and Python 3.14.7. Installed-wheel CLI help and a real monitoring cycle pass in each mode. No runtime change or new native fallback was needed. Full developer setup remains blocked by source-only pytest-network.
+
+Dependencies were installed only from published wheels; the project's own pure-Python wheel was built locally without build isolation. `uv lock --upgrade` refreshed the lock. No GitHub builds, releases or upstream reports were sent. Upstream bug filing is the human operator's job.
