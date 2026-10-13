@@ -36,16 +36,12 @@ test: clean uv.lock install_plugins
 #	$(VENV) bash basic_test_with_logging.sh
 
 
-.build_history:
-	@mkdir -p .build_history
 
-.build_history/isort: .build_history $(FILES)
+isort:
 	@echo "Formatting imports"
 	$(VENV) isort .
-	@touch .build_history/isort
 
 .PHONY: isort
-isort: .build_history/isort
 
 .PHONY: jiggle_version
 
@@ -59,7 +55,7 @@ else
 	# jiggle_version bump --increment auto
 endif
 
-.build_history/black: .build_history .build_history/isort jiggle_version $(FILES)
+black: isort jiggle_version
 	@echo "Formatting code"
 	$(VENV) metametameta pep621
 	$(VENV) black sparkle_log # --exclude .venv
@@ -67,33 +63,27 @@ endif
 	$(VENV) git2md sparkle_log --ignore __init__.py __pycache__ --output SOURCE.md
 
 .PHONY: black
-black: .build_history/black
 
-.build_history/pre-commit: .build_history .build_history/isort .build_history/black
+pre-commit: isort black
 	@echo "Pre-commit checks"
 	$(VENV) pre-commit run --all-files
-	@touch .build_history/pre-commit
 
 .PHONY: pre-commit
-pre-commit: .build_history/pre-commit
 
-.build_history/bandit: .build_history $(FILES)
+bandit:
 	@echo "Security checks"
 	$(VENV)  bandit sparkle_log -r --quiet
-	@touch .build_history/bandit
 
 .PHONY: bandit
-bandit: .build_history/bandit
 
 .PHONY: pylint
-.build_history/pylint: .build_history .build_history/isort .build_history/black $(FILES)
+pylint: isort black
 	@echo "Linting with pylint"
 	$(VENV) ruff check --fix
 	$(VENV) pylint sparkle_log --fail-under 9.8
-	@touch .build_history/pylint
 
 # for when using -j (jobs, run in parallel)
-.NOTPARALLEL: .build_history/isort .build_history/black
+.NOTPARALLEL: isort black
 
 check: mypy test pylint bandit
 
