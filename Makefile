@@ -79,7 +79,7 @@ bandit:
 .PHONY: pylint
 pylint: isort black
 	@echo "Linting with pylint"
-	$(VENV) ruff check --fix
+	$(VENV) ruff check --fix sparkle_log
 	$(VENV) pylint sparkle_log --fail-under 9.8
 
 # for when using -j (jobs, run in parallel)
